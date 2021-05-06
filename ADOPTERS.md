@@ -79,6 +79,13 @@ production users that have added themselves (in alphabetical order):
   clusters and 1,000 namespaces. For more information on how Intuit
   uses OPA see [this talk from KubeCon Seattle 2018](https://youtu.be/CDDsjMOtJ-c?t=980).
 
+* [Jetstack](https://www.jetstack.io) uses OPA on customer projects to validate
+  resources deployed to Kubernetes environments are conformant with
+  organization rules. This has involved both validating and mutating resources
+  as well as the following related projects: conftest, konstraint, and
+  Gatekeeper. Jetstack also uses OPA via the Golang API in _Jetstack Secure_ to
+  automate the checking of resources against our best practice recommendations.
+
 * [Medallia](https://www.medallia.com/) uses OPA to audit AWS
   resources for compliance violations. The policies search across
   state from Terraform and AWS APIs to identify security violations
