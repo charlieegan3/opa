@@ -408,7 +408,6 @@ Depending on the use case and the integration with OPA that you are using, the s
 
 ```rego
 package example
-import rego.v1
 
 # entry point is 'deny'
 default deny := false
@@ -422,7 +421,6 @@ If you assume all of the rules you write are correct, then you know that every r
 
 ```rego
 package example
-import rego.v1
 
 # entry point is 'allow'
 default allow := false
@@ -436,7 +434,6 @@ If you assume your rules are correct, the only requests that are accepted are kn
 
 ```rego
 package example
-import rego.v1
 
 # entry point is 'authz'
 default authz := false

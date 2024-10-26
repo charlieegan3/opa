@@ -159,8 +159,6 @@ must be provided on startup. The authorization policy must be structured as foll
 # system.authz as follows:
 package system.authz
 
-import rego.v1
-
 default allow := false # Reject requests by default.
 
 allow if {
@@ -267,8 +265,6 @@ identity:
 ```live:system_authz_secret:module:read_only
 package system.authz
 
-import rego.v1
-
 default allow := false          # Reject requests by default.
 
 allow if {                      # Allow request if...
@@ -319,8 +315,6 @@ follows:
 ```live:system_authz_object_resp:module:read_only
 package system.authz
 
-import rego.v1
-
 default allow := {
 	"allowed": false,
 	"reason": "unauthorized resource access",
@@ -343,8 +337,6 @@ validate the identity:
 
 ```live:system_authz_bearer:module:read_only
 package system.authz
-
-import rego.v1
 
 # Tokens may defined in policy or pushed into OPA as data.
 tokens := {
@@ -375,8 +367,6 @@ documents:
 
 ```live:system_authz_bearer_complete:module:read_only
 package system.authz
-
-import rego.v1
 
 # Rights may be defined in policy or pushed into OPA as data.
 rights := {
@@ -516,8 +506,6 @@ information such as which paths are allowed.
 ```live:system_authz_x509:module:read_only
 package system.authz
 
-import rego.v1
-
 id_uri := input.client_certificates[0].URIs[0]
 id_string := sprintf("%s://%s%s", [id_uri.Scheme, id_uri.Host, id_uri.Path])
 
@@ -635,8 +623,6 @@ clients access to the default policy decision, i.e., `POST /`:
 
 ```live:hardened_example:module:read_only
 package system.authz
-
-import rego.v1
 
 # Deny access by default.
 default allow := false
