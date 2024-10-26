@@ -39,7 +39,7 @@ val := arr[0]
 # lookup last value
 val := arr[count(arr)-1]
 
-# with `import rego.v1` or `import future.keywords.in`
+# with keywords
 some 0, val in arr   # lookup value at index 0
 0, "foo" in arr      # check if value at index 0 is "foo"
 some i, "foo" in arr # find all indices i that have value "foo"
@@ -71,7 +71,7 @@ obj.foo.bar.baz
 # check if path foo.bar.baz, foo.bar, or foo does not exist or is false
 not obj.foo.bar.baz
 
-# with `import rego.v1` or `import future.keywords.in`
+# with keywords
 o := {"foo": false}
 # check if value exists: the expression will be true
 false in o
@@ -94,7 +94,7 @@ a_set[["a", "b", "c"]]
 # find all arrays of the form [x, "b", z] in the set
 a_set[[x, "b", z]]
 
-# with `import rego.v1` or `import future.keywords.in`
+# with keywords
 "foo" in a_set
 not "foo" in a_set
 some ["a", "b", "c"] in a_set
@@ -120,7 +120,7 @@ val := arr[_]
 # iterate over index/value pairs
 val := arr[i]
 
-# with `import rego.v1` or `import future.keywords.in`
+# with keywords
 some val in arr    # iterate over values
 some i, _ in arr   # iterate over indices
 some i, val in arr # iterate over index/value pairs
@@ -138,7 +138,7 @@ val := obj[_]
 # iterate over key/value pairs
 val := obj[key]
 
-# with `import rego.v1` or `import future.keywords.in`
+# with keywords
 some val in obj      # iterate over values
 some key, _ in obj   # iterate over keys
 some key, val in obj # key/value pairs
@@ -150,7 +150,7 @@ some key, val in obj # key/value pairs
 # iterate over values
 set[val]
 
-# with `import rego.v1` or `import future.keywords.in`
+# with keywords
 some val in set
 ```
 
@@ -187,7 +187,7 @@ not any_not_match
 ```
 
 ```live:iteration/forall:module:read_only
-# with `import rego.v1`, or `import future.keywords.in` and `import future.keywords.if`
+# with keywords
 any_match if {
     some x in set
     f(x)
@@ -223,7 +223,7 @@ c := a | b
 p := true { ... }
 
 # OR
-# with `import rego.v1` or `import future.keywords.if`
+# with keywords
 p if { ... }
 
 # OR
@@ -233,7 +233,7 @@ p { ... }
 ### Conditionals
 
 ```live:rules/cond:module:read_only
-# with `import rego.v1` or `import future.keywords.if`
+# with keywords
 default a := 1
 a := 5   if { ... }
 a := 100 if { ... }
@@ -246,7 +246,7 @@ a := 100 if { ... }
 a_set[x] { ... }
 a_set[y] { ... }
 
-# alternatively, with `import rego.v1`, or `import future.keywords.contains` and `import future.keywords.if`
+# alternatively, with keywords
 a_set contains x if { ... }
 a_set contains y if { ... }
 
@@ -258,7 +258,7 @@ a_map[w] := z if { ... }
 ### Ordered (Else)
 
 ```live:rules/ordered:module:read_only
-# with `import rego.v1` or `import future.keywords.if`
+# with keywords
 default a := 1
 a := 5 if { ... }
 else := 10 if { ... }
@@ -267,7 +267,7 @@ else := 10 if { ... }
 ### Functions (Boolean)
 
 ```live:rules/funcs:module:read_only
-# with `import rego.v1` or `import future.keywords.if`
+# with keywords
 f(x, y) if {
     ...
 }
@@ -282,7 +282,7 @@ f(x, y) := true if {
 ### Functions (Conditionals)
 
 ```live:rules/condfuncs:module:read_only
-# with `import rego.v1` or `import future.keywords.if`
+# with keywords
 f(x) := "A" if { x >= 90 }
 f(x) := "B" if { x >= 80; x < 90 }
 f(x) := "C" if { x >= 70; x < 80 }
@@ -291,7 +291,7 @@ f(x) := "C" if { x >= 70; x < 80 }
 ### Reference Heads
 
 ```live:rules/ref_heads:module:read_only
-# with `import rego.v1`, or `import future.keywords.contains` and `import future.keywords.if`
+# with keywords
 fruit.apple.seeds = 12 if input == "apple"             # complete document (single value rule)
 
 fruit.pineapple.colors contains x if x := "yellow"     # multi-value rule
@@ -1233,8 +1233,6 @@ OPA doesn't presume what merge strategy is appropriate; instead, this lies in th
 # - Acme Corp.
 package example
 
-import rego.v1
-
 # METADATA
 # scope: document
 # description: A rule that merges metadata annotations in various ways.
@@ -1399,8 +1397,6 @@ set             = empty-set | non-empty-set
 non-empty-set   = "{" term { "," term } "}"
 empty-set       = "set(" ")"
 ```
-
-Note that the grammar corresponds to Rego with `rego.v1` enabled (See ([OPA v1.0](../opa-1) for more info).
 
 The grammar defined above makes use of the following syntax. See [the Wikipedia page on EBNF](https://en.wikipedia.org/wiki/Extended_Backus–Naur_Form) for more details:
 
