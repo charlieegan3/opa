@@ -95,17 +95,12 @@ OPA can be configured to listen on specific interfaces using the `--addr` flag. 
 ```bash
 opa run --server \
   --log-level debug \
-  --addr localhost:8181 \
+  --addr 0.0.0.0:8181 \
 ```
 
-By default, OPA binds to the 0.0.0.0 interface, which allows the OPA server to be exposed to services running outside of the same machine. It's important to note that binding OPA to the 0.0.0.0 interface by itself is not inherently insecure in a trusted environment, exposing OPA to the outside world would also require opening ports and likely a similar procedure on a gateway layer above.
+By default, OPA binds to `localhost`, which prevents the OPA server from being exposed to services running outside of the same machine.
 
 In situations where OPA is not intended to be exposed to remote services, it is recommended to bind OPA to the localhost interface, which only allows connections from the same machine. If it is necessary to expose OPA to remote services, ensure to follow the security recommendations on this page, such as requiring authentication.
-
-{{< info >}}
-The `--v1-compatible` flag can be set on `opa run` to opt-in to OPA features and behaviors that will be enabled by default in a future OPA v1.0 releases. For example, if the `--v1-compatible` flag is set, OPA will listen
-for HTTP connections on `localhost:8181` by default.
-{{< /info >}}
 
 ## Authentication and Authorization
 
