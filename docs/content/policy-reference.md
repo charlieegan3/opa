@@ -780,21 +780,21 @@ shows you how to "flatten" a hierarchy of access permissions.
 package graph_reachable_example
 
 org_chart_data := {
-  "ceo": {},
-  "human_resources": {"owner": "ceo", "access": ["salaries", "complaints"]},
-  "staffing": {"owner": "human_resources", "access": ["interviews"]},
-  "internships": {"owner": "staffing", "access": ["blog"]}
+        "ceo": {},
+        "human_resources": {"owner": "ceo", "access": ["salaries", "complaints"]},
+        "staffing": {"owner": "human_resources", "access": ["interviews"]},
+        "internships": {"owner": "staffing", "access": ["blog"]},
 }
 
-org_chart_graph[entity_name] := edges {
-  org_chart_data[entity_name]
-  edges := {neighbor | org_chart_data[neighbor].owner == entity_name}
+org_chart_graph[entity_name] := edges if {
+        org_chart_data[entity_name]
+        edges := {neighbor | org_chart_data[neighbor].owner == entity_name}
 }
 
-org_chart_permissions[entity_name] := access {
-  org_chart_data[entity_name]
-  reachable := graph.reachable(org_chart_graph, {entity_name})
-  access := {item | reachable[k]; item := org_chart_data[k].access[_]}
+org_chart_permissions[entity_name] := access if {
+        org_chart_data[entity_name]
+        reachable := graph.reachable(org_chart_graph, {entity_name})
+        access := {item | reachable[k]; item := org_chart_data[k].access[_]}
 }
 ```
 ```live:graph/reachable/example:query
@@ -809,15 +809,15 @@ It may be useful to find all reachable paths from a root element. `graph.reachab
 package graph_reachable_paths_example
 
 path_data := {
-    "aTop": [],
-    "cMiddle": ["aTop"],
-    "bBottom": ["cMiddle"],
-    "dIgnored": []
+        "aTop": [],
+        "cMiddle": ["aTop"],
+        "bBottom": ["cMiddle"],
+        "dIgnored": [],
 }
 
-all_paths[root] := paths {
-    path_data[root]
-    paths := graph.reachable_paths(path_data, {root})
+all_paths[root] := paths if {
+        path_data[root]
+        paths := graph.reachable_paths(path_data, {root})
 }
 ```
 ```live:graph/reachable_paths/example:query
@@ -1194,8 +1194,8 @@ package example
 # description: Numbers may not be higher than 5
 # custom:
 #  severity: MEDIUM
-deny[format(rego.metadata.rule())] {
-    input.number > 5
+deny contains format(rego.metadata.rule()) if {
+        input.number > 5
 }
 
 # METADATA
@@ -1203,8 +1203,8 @@ deny[format(rego.metadata.rule())] {
 # description: Subject must have the 'admin' role
 # custom:
 #  severity: HIGH
-deny[format(rego.metadata.rule())] {
-    input.subject.role != "admin"
+deny contains format(rego.metadata.rule()) if {
+        input.subject.role != "admin"
 }
 
 format(meta) := {"severity": meta.custom.severity, "reason": meta.description}
