@@ -73,6 +73,7 @@ function createDataRequestOpts(groups, groupName) {
     if (input) {
       body.input = input
     }
+    body.query_imports = ["rego.v1"]
 
     return {
       body: JSON.stringify(body),
