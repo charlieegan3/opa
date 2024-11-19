@@ -13,6 +13,7 @@ The following table lists OPA project maintainers and areas of expertise in alph
 | Stephan Renatus | @srenatus | stephan@styra.com | Styra | opa | 2024-03-31       |
 | Tim Hinrichs | @timothyhinrichs | timothy.l.hinrichs@gmail.com | Styra | all repositories | 2024-03-31       |
 | Torin Sandall | @tsandall | torinsandall@gmail.com | Styra | all repositories | 2024-03-31       |
+| Tyler Schade | @tjons | tylerschade99@gmail.com | GEICO | opa-envoy-plugin | 2024-11-19       |
 
 ## Emeritus
 
