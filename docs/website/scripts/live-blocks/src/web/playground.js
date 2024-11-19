@@ -66,6 +66,7 @@ function createDataRequestOpts(groups, groupName) {
   try {
     const body = {} // In the format accepted by playground backend
     body.rego_modules = {[EVAL_MODULE_NAME]: module, ...included}
+    body.rego_version = 1
     body.query_package = pkg
     if (query) {
       body.rego = query
