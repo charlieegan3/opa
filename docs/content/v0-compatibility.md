@@ -50,6 +50,11 @@ _both_ the current 0.x OPA version and OPA v1.0.
 
 Note (*): the `rego.v1` flag is not supported before OPA `v0.58.0`.
 
+Note (*): Pre v1.0 versions of OPA also support a comparable `--v1-compatible`
+flag which can be used to produce and consume Rego v1 bundles. See
+[Upgrading to v1.0](./v0-upgrade) for more information on how to use this flag
+as part of an upgrade to OPA v1.0.
+
 ### v0.x compatibility mode in Rego package
 
 There are three ways to enable v0.x compatibility mode in the [Rego package](https://pkg.go.dev/github.com/open-policy-agent/opa/rego):
