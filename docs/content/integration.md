@@ -274,6 +274,12 @@ Setting an `ID` in `sdk.Options` is optional, but recommended. If you do not set
 for the system. While this is fine for testing, it makes it difficult to monitor the system over time, as a new ID will
 be created each time the SDK is initialized, such as when the process is restarted.
 
+{{< info >}}
+This section documents the v1 SDK package.
+Please see [v0 Backwards Compatibility](../v0-compatibility) for notes on using
+the v0 SDK package.
+{{< /info >}}
+
 ### Integrating with the Go API
 
 Use the low-level
@@ -387,6 +393,12 @@ if !results.Allowed() {
 For more examples of embedding OPA as a library see the
 [`rego`](https://pkg.go.dev/github.com/open-policy-agent/opa/rego#pkg-examples)
 package in the Go documentation.
+
+{{< info >}}
+This section documents the v1 Rego package.
+Please see [v0 Backwards Compatibility](../v0-compatibility) for notes on using
+the v0 Rego package.
+{{< /info >}}
 
 #### Ecosystem Projects
 
