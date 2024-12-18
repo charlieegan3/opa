@@ -467,3 +467,43 @@ OPA v1.0. These steps are largely based on the process outlined in this
 
 If you run into any issues while upgrading a Rego project, please drop a message
 in the #help channel on the [OPA Slack](https://slack.openpolicyagent.org/).
+
+## Upgrading for Go Integrations
+
+Both users of the
+[v0 SDK](https://pkg.go.dev/github.com/open-policy-agent/opa/sdk)
+and
+[v0 Rego](https://pkg.go.dev/github.com/open-policy-agent/opa/rego) packages are
+encoraged to upgrade to the new v1 packages instead. These can be found here:
+
+- [SDK v1](https://pkg.go.dev/github.com/open-policy-agent/opa/v1/sdk)
+- [Rego v1](https://pkg.go.dev/github.com/open-policy-agent/opa/v1/rego)
+
+In order to upgrade to a v1 package, you need to make the following change:
+
+Before:
+
+```
+import (
+    "github.com/open-policy-agent/opa/rego"
+)
+```
+
+After:
+
+```
+import (
+    "github.com/open-policy-agent/opa/v1/rego"
+)
+```
+
+This will be needed for all OPA packages your application depends on, not just
+`rego` and `sdk`, other commonly used packages are: `ast`, `bundle`, `compile`,
+`types` & `topdown`.
+
+As of OPA 1.0, all v0 packages have been deprecated. While they will remain for
+the lifetime of OPA 1.0, you are encouraged to upgrade as soon as possible.
+
+If you need to use v0 functionality, you can still use v1 packages. Please see
+the [Backwards Compatibility](./v0-compatibility/) documentation for more
+details.
