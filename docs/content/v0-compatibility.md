@@ -113,6 +113,37 @@ r := rego.New(
 
 ### v0.x compatibility mode in the OPA Go SDK
 
-{{< info >}}
-TODO
-{{< /info >}}
+In OPA 1.0, the recommended
+
+[SDK package](https://pkg.go.dev/github.com/open-policy-agent/opa/v1/sdk)
+import for most users is `github.com/open-policy-agent/opa/v1/sdk`.
+
+Those who need to support v0 bundles should set the Rego version on bundle
+manifests as outlined above wherever possible. For users unable to do this, use
+of a v0 import of the SDK package is required. For example:
+
+```go
+package main
+
+import (
+	"bytes"
+	"context"
+	"fmt"
+
+	"github.com/open-policy-agent/opa/sdk" // <-- import v0 sdk package
+)
+
+func main() {
+	opa, _ := sdk.New(ctx, sdk.Options{
+		ID:     "opa-1",
+		Config: bytes.NewReader(config),
+	})
+
+	defer opa.Stop(ctx)
+
+    // ...
+}
+```
+
+Users in this scenario should look to version bundles as soon as possible to
+allow them to use a v1 SDK instead.
