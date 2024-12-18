@@ -111,6 +111,48 @@ r := rego.New(
 )
 ```
 
+Finally, another option is to import the `v0` package instead. The program
+
+below imports the v0 package instead:
+
+```go
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+
+	"github.com/open-policy-agent/opa/rego"
+    // rather than the v1 import, which is:
+	// "github.com/open-policy-agent/opa/v1/rego"
+)
+
+func main() {
+	module := `package example
+messages[msg] {
+	msg := "foo"
+}
+`
+
+	r := v0rego.New(
+		rego.Query("data.example.messages"),
+		rego.Module("example.rego", module),
+	)
+
+	rs, _ = rv0.Eval(context.TODO())
+	bs, _ = json.Marshal(rs)
+
+	fmt.Println(string(bs))
+}
+```
+
+{{< danger >}}
+**Note**: Using v0 packages and v1 packages in the same program is considered an
+anti-pattern and is not recommended or supported. Any interoperability between
+the two packages is not guaranteed and should be considered unsupported.
+{{< /danger >}}
+
 ### v0.x compatibility mode in the OPA Go SDK
 
 {{< info >}}
