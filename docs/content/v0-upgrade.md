@@ -455,12 +455,14 @@ upgrade their Rego code to conform to best practices, and to be compatible with
 OPA v1.0. These steps are largely based on the process outlined in this
 [detailed blog post](https://www.styra.com/blog/renovating-rego/).
 
-1. `opa check`, this will catch any parse or compilation errors.
-2. `opa check --strict`, this will raise a number of other issues found in code
+Before starting the upgrade, users are recommended to ensure they have a local
+OPA binary of version 1.0 or later.
+
+1. `opa check --v0-v1`, this will catch any parse or compilation errors.
+2. `opa check --v0-v1 --strict`, this will raise a number of other issues found in code
    that might make it incompatible with OPA v1.0 such as the use of deprecated
    built-ins or duplicate imports.
-3. Automatically reformat your code for OPA v1.0 with
-   `opa fmt --write --rego-v1`.
+3. Automatically reformat your code for OPA v1.0 with `opa fmt --write --v0-v1`.
 4. `regal lint`, the [Regal linter](/integrations/regal/) has many more rules to
    test for issues in Rego code that can lead to errors, poor performance or
    unexpected behaviour.

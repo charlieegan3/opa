@@ -27,8 +27,8 @@ to migrate their Rego to be compatible with OPA v1.0 using the below tooling opt
 
 1. The `rego.v1` import makes OPA apply all restrictions that are enforced by default in OPA v1.0.
    If a Rego module imports `rego.v1`, it means applicable `future.keywords` imports are implied. It is illegal to import both `rego.v1` and `future.keywords` in the same module.
-2. The `--rego-v1` flag on the `opa fmt` command will rewrite existing modules to use the `rego.v1` import instead of `future.keywords` imports.
-3. The `--rego-v1` flag on the `opa check` command will check that either the `rego.v1` import or applicable `future.keywords` imports are present if any of the `in`, `every`, `if` and `contains` keywords are used in a module.
+2. The `--v0-v1` flag on the `opa fmt` command will rewrite existing modules to use the `rego.v1` import instead of `future.keywords` imports.
+3. The `--v0-v1` flag on the `opa check` command will check that either the `rego.v1` import or applicable `future.keywords` imports are present if any of the `in`, `every`, `if` and `contains` keywords are used in a module.
 
 ### v0.x compatibility mode in the OPA binary
 
@@ -42,17 +42,15 @@ releases:
 - `eval`: supports Rego v0.x syntax modules, use of `import rego.v1` is optional.
 - `exec`: supports Rego v0.x syntax modules, use of `import rego.v1` is optional.
 - `fmt`*: formats modules to be compatible with OPA v0.x syntax. See note about
-  `--rego-v1` flag below.
+  `--v0-v1` flag below.
 - `inspect`: supports Rego v0.x syntax modules, use of `import rego.v1` is optional.
 - `parse`: supports Rego v0.x syntax modules, use of `import rego.v1` is optional.
 - `run`: supports modules (including discovery bundle) using Rego v0.x syntax, use of `import rego.v1` is optional. Binds server listeners to all interfaces by default, rather than localhost.
 - `test`: supports Rego v0.x syntax modules, use of `import rego.v1` is optional.
 
-Note (*): the `check` and `fmt` commands also support the `--rego-v1` flag,
+Note (*): the `check` and `fmt` commands also support the `--v0-v1` flag,
 which will check/format Rego modules as if compatible with the Rego syntax of
 _both_ the old 0.x OPA version and current OPA v1.0.
-
-Note (*): the `--rego-v1` flag is not supported before OPA `v0.59.0`.
 
 Note (*): Pre v1.0 versions of OPA also support a comparable `--v1-compatible`
 flag which can be used to produce and consume Rego v1 bundles. See
