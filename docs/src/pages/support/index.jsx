@@ -26,6 +26,7 @@ export default function Support() {
       <Heading as="h1">Open Policy Agent Support</Heading>
       <p className="margin-bottom--lg">
         Below is a list of companies that offer commercial support and other enterprise offerings for Open Policy Agent.
+        Companies have a track record of helping customers onboard to OPA and providing best-practise advice.
       </p>
 
       <CardGrid justifyCenter={false}>
