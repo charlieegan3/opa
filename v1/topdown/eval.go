@@ -1184,6 +1184,12 @@ func (e *eval) evalCall(terms []*ast.Term, iter unifyIterator) error {
 		return e.saveCall(bi.Decl.Arity(), terms, iter)
 	}
 
+	if e.compiler != nil && !e.partial() {
+		if rref := e.compiler.RegoBuiltinRef(builtinName); rref != nil {
+			return e.evalRegoBuiltin(rref, terms, iter)
+		}
+	}
+
 	eval := evalBuiltinPool.Get()
 	defer evalBuiltinPool.Put(eval)
 
@@ -1235,6 +1241,25 @@ func (e *eval) evalCall(terms []*ast.Term, iter unifyIterator) error {
 	eval.operands = slices.Grow(eval.operands, len(terms)-1)[:0]
 
 	return eval.eval(iter)
+}
+
+// evalRegoBuiltin calls the Rego implementation of a built-in. Tracing is off
+// while it runs, so the trace looks the same as for a Go built-in.
+func (e *eval) evalRegoBuiltin(impl ast.Ref, terms []*ast.Term, iter unifyIterator) error {
+	call := make([]*ast.Term, len(terms))
+	copy(call, terms)
+	call[0] = ast.NewTerm(impl)
+
+	traced := e.traceEnabled
+	e.traceEnabled = false
+	err := e.evalCall(call, func() error {
+		e.traceEnabled = traced
+		err := iter()
+		e.traceEnabled = false
+		return err
+	})
+	e.traceEnabled = traced
+	return err
 }
 
 func (e *eval) evalCallValue(arity int, terms []*ast.Term, mock *ast.Term, iter unifyIterator) error {

@@ -159,6 +159,8 @@ type Compiler struct {
 	capabilities               *Capabilities                 // user-supplied capabilities
 	imports                    map[string][]*Import          // saved imports from stripping
 	builtins                   map[string]*Builtin           // universe of built-in functions
+	regoBuiltins               bool                          // evaluate built-ins with a Rego implementation using it
+	regoBuiltinRefs            map[string]Ref                // built-in name to the Rego function added for it
 	customBuiltins             map[string]*Builtin           // user-supplied custom built-in functions (deprecated: use capabilities)
 	unsafeBuiltinsMap          map[string]struct{}           // user-supplied set of unsafe built-ins functions to block (deprecated: use capabilities)
 	deprecatedBuiltinsMap      map[string]struct{}           // set of deprecated, but not removed, built-in functions
@@ -451,6 +453,7 @@ func NewCompiler() *Compiler {
 		comprehensionIndices:  map[*Term]*ComprehensionIndex{},
 		debug:                 debug.Discard(),
 		defaultRegoVersion:    DefaultRegoVersion,
+		regoBuiltins:          regoBuiltinsEnvEnabled(),
 	}
 
 	c.ModuleTree = NewModuleTree(nil)
@@ -711,6 +714,7 @@ func (c *Compiler) compileModules(modules map[string]*Module) {
 		}
 	}
 
+	c.injectRegoBuiltins()
 	c.compile()
 }
 

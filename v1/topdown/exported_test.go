@@ -101,6 +101,7 @@ func TestRegoWithNotBody(t *testing.T) {
 type testOpts struct {
 	queryOpts     []func(*Query) *Query
 	parserOptions ast.ParserOptions
+	regoBuiltins  *bool // overrides the default for the Rego built-ins mode
 }
 
 type testOpt func(*testOpts)
@@ -114,6 +115,12 @@ func query(q func(*Query) *Query) testOpt {
 func parserOptions(po ast.ParserOptions) testOpt {
 	return func(o *testOpts) {
 		o.parserOptions = po
+	}
+}
+
+func regoBuiltinsMode(enabled bool) testOpt {
+	return func(o *testOpts) {
+		o.regoBuiltins = &enabled
 	}
 }
 
@@ -146,9 +153,17 @@ func testRun(t *testing.T, tc cases.TestCase, opts ...testOpt) {
 		modules[fmt.Sprintf("test-%d.rego", i)] = module
 	}
 
-	compiler := ast.MustCompileModulesWithOpts(modules, ast.CompileOpts{
-		ParserOptions: tos.parserOptions,
-	})
+	var compiler *ast.Compiler
+	if tos.regoBuiltins != nil {
+		var err error
+		if compiler, err = compileWithRegoBuiltins(modules, tos.parserOptions, *tos.regoBuiltins); err != nil {
+			t.Fatal(err)
+		}
+	} else {
+		compiler = ast.MustCompileModulesWithOpts(modules, ast.CompileOpts{
+			ParserOptions: tos.parserOptions,
+		})
+	}
 	query, err := compiler.QueryCompiler().Compile(ast.MustParseBody(tc.Query))
 
 	if err != nil {
